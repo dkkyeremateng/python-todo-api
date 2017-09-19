@@ -26,6 +26,15 @@ def create_app(settings_override=None):
     app.register_blueprint(todo)
     app.register_blueprint(user)
 
+    @app.route('/')
+    def index():
+        """
+        Render a Hello World response.
+
+        :return: Flask response
+        """
+        return 'Python KeepAPI'
+
     return app
 
 
