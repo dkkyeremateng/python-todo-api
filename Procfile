@@ -1,1 +1,1 @@
-web gunicorn keep.app:create_app()
+web gunicorn "keep.app:create_app()"
