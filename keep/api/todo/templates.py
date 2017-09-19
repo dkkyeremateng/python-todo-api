@@ -5,7 +5,7 @@ def todo_obj(todo):
         "is_completed":   todo.is_completed,
         "completed_at":   todo.completed_at,
         "links": [
-            {"rel": "self", "href": "/api/todo/" + todo.external_id}
+            {"rel": "self", "href": "/api/todos/" + todo.external_id}
         ]
     }
 
