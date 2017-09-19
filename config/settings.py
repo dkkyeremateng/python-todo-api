@@ -1,7 +1,7 @@
 # Flask Configs
 DEBUG = True
 SECRET_KEY = 'mysecretkey'
-SERVER_NAME = 'https://python-keep-api.herokuapp.com'
+SERVER_NAME = 'python-keep-api.herokuapp.com'
 
 # Setting posts per page for pagination
 POSTS_PER_PAGE = 5
