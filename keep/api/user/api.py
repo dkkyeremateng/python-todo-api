@@ -8,7 +8,7 @@ import uuid
 from keep.api.user.models import User
 from keep.api.user.decorators import user_required
 from keep.api.user.schema import register_schema, login_schema
-from keep.api.user.templates import user_obj, users_obj
+from keep.api.user.templates import user_obj
 
 
 class UserAPI(MethodView):
@@ -17,24 +17,6 @@ class UserAPI(MethodView):
         if (request.method != 'GET' and request.method != 'DELETE') \
                 and not request.json:
             abort(400)
-
-    def get(self):
-        token = request.headers.get('X-Auth')
-
-        if token is None:
-            return jsonify({}), 401
-
-        user = User.find_by_token(token)
-
-        if not user:
-            return jsonify({}), 401
-
-        response = {
-            'result': 'ok',
-            'user': user_obj(user)
-        }
-
-        return jsonify(response), 200
 
     def post(self):
 
@@ -105,17 +87,20 @@ class UserAPI(MethodView):
 
                 return jsonify(response), 201, headers
 
+    decorators = [user_required]
+
+    def get(self):
+        user = kwargs['user']
+
+        response = {
+            'result': 'ok',
+            'user': user_obj(user)
+        }
+
+        return jsonify(response), 200
+
     def delete(self):
-
-        token = request.headers.get('X-Auth')
-
-        if token is None:
-            return jsonify({}), 401
-
-        user = User.find_by_token(token)
-
-        if not user:
-            return jsonify({}), 401
+        user = kwargs['user']
 
         u = user.remove_auth_token(token)
 
